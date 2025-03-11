@@ -1,0 +1,32 @@
+{
+  "name": "zzclub-base-server",
+  "description": "zzclub base server",
+  "private": true,
+  "version": "1.0.1",
+  "author": {
+    "name": "aatrooox",
+    "email": "gnakzz@qq.com",
+    "url": "https://zzao.club"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "nitro build",
+    "dev": "nitro dev --port 5770",
+    "prepare": "nitro prepare",
+    "preview": "node .output/server/index.mjs",
+    "release": "pnpm release:patch",
+    "release:patch": "npx changelogen@latest --patch --release --push",
+    "release:minor": "npx changelogen@latest --minor --release --push",
+    "release:major": "npx changelogen@latest --major --release --push"
+  },
+  "devDependencies": {
+    "nitropack": "latest"
+  },
+  "dependencies": {
+    "@prisma/client": "6.4.1",
+    "h3-zod": "^0.5.3",
+    "jose": "^6.0.8",
+    "prisma": "6.4.1",
+    "zod": "^3.24.2"
+  }
+}
