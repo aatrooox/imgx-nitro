@@ -1,12 +1,12 @@
 {
-  "name": "zzclub-base-server",
-  "description": "zzclub base server",
+  "name": "imgx-server",
+  "description": "generate useful img from server side",
   "private": true,
-  "version": "1.0.1",
+  "version": "0.1.0",
   "author": {
     "name": "aatrooox",
     "email": "gnakzz@qq.com",
-    "url": "https://zzao.club"
+    "url": "https://imgx.zzao.club"
   },
   "type": "module",
   "scripts": {
@@ -20,13 +20,17 @@
     "release:major": "npx changelogen@latest --major --release --push"
   },
   "devDependencies": {
-    "nitropack": "latest"
+    "nitropack": "latest",
+    "vue": "^3.5.13"
   },
   "dependencies": {
+    "@iconify/utils": "^2.3.0",
     "@prisma/client": "6.4.1",
+    "@resvg/resvg-js": "^2.6.2",
     "h3-zod": "^0.5.3",
     "jose": "^6.0.8",
     "prisma": "6.4.1",
+    "satori": "^0.12.1",
     "zod": "^3.24.2"
   }
 }
