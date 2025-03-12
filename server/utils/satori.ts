@@ -36,11 +36,10 @@ export interface VNode {
 }
 
 // ... 保留现有的导入和接口定义 ...
-
-export async function vueTemplateToSatori(template: string, props: Record<string, any>): Promise<SatoriNode> {
+export async function getPreviewHtml(template: string, props: Record<string, any>):Promise<string> {
   try {
-    // 创建一个简单的组件，使用传入的模板和props
-    const component = {
+     // 创建一个简单的组件，使用传入的模板和props
+     const component = {
       template,
       props: Object.keys(props),
       setup() {
@@ -53,10 +52,18 @@ export async function vueTemplateToSatori(template: string, props: Record<string
     
     // 渲染为 HTML 字符串
     const html = await renderToString(app);
-    
+
+    return html
+  } catch (err) {
+    return ''
+  }
+}
+export async function vueTemplateToSatori(template: string, props: Record<string, any>): Promise<SatoriNode> {
+  try {
+    const html = await getPreviewHtml(template, props)
     // 使用 satori-html 将 HTML 转换为 Satori 节点
     const satoriNode = _html(html);
-
+    console.log(`satoriNode`, satoriNode)
     // 处理 Tailwind 类名转换为样式
     const processTailwindClasses = (twClasses: string): { tw: string, styles: Record<string, string> } => {
       const styles: Record<string, string> = {};

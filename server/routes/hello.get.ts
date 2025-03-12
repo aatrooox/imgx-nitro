@@ -1,46 +1,57 @@
 import { useSafeValidatedQuery, z } from "h3-zod";
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js'
-const templateString = `<div class="w-full h-full flex flex-col" :style="{ background: backgroundGradient, borderRadius: borderRadius, padding: padding }">
-    <div class="w-full h-full flex flex-col p-8 rounded-3xl">
-        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
-            <div class="flex items-center justify-center text-gray-500">🚲</div>
-        </div>
-        
-        <div class="flex text-gray-500 mb-6" :style="{ fontSize: dateSize }">
-            {{ date }}
-        </div>
-        
-        <div class="flex items-center mb-4" :style="{ fontSize: titleSize, fontWeight: titleWeight }">
-            <div class="flex mr-2">👋</div>
-            <div class="flex">{{ greeting }}</div>
-        </div>
-        
-        <div class="flex flex-col gap-2 mb-auto" :style="{ fontSize: contentSize }">
-            <div class="flex items-start">
-                <div class="flex mr-2">💡</div>
-                <div class="flex flex-wrap">{{ description }}</div>
-            </div>
-            <div v-for="(item, index) in listItems" :key="index" class="flex items-start">
-                <div class="flex mr-2">–</div>
-                <div class="flex">{{ item }}</div>
-            </div>
-        </div>
-        
-        <div class="flex justify-between mt-4 text-gray-500" :style="{ fontSize: footerSize }">
-            <div class="flex">{{ author }}</div>
-            <div class="flex">{{ wordCount }}</div>
-        </div>
+const templateString = `<div class="w-full h-full flex justify-center items-center">
+  <div 
+    class="w-full h-full flex flex-col p-8 rounded-3xl"
+    :style="{
+      background: bgGradient
+    }"
+  >
+    <div class="flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+      <div class="flex items-center justify-center text-gray-500">
+        {{ iconText }}
+      </div>
     </div>
+    
+    <div class="flex text-gray-500 mb-6">
+      {{ date }}
+    </div>
+    
+    <div class="flex mb-4">
+      <div class="flex items-center">
+        <div class="mr-2">{{ handEmoji }}</div>
+        <div class="text-2xl font-bold">{{ greeting }}</div>
+      </div>
+    </div>
+    
+    <div class="flex mb-4">
+      <div class="flex items-center">
+        <div class="mr-2">{{ lightEmoji }}</div>
+        <div>{{ description }}</div>
+      </div>
+    </div>
+    
+    <div class="flex flex-col space-y-2 mb-auto">
+      <div class="flex items-start" v-for="(item, index) in listItems" :key="index">
+        <div class="flex mr-2">-</div>
+        <div class="flex">{{ item }}</div>
+      </div>
+    </div>
+    
+    <div class="flex justify-between mt-4">
+      <div class="flex text-gray-500">{{ signature }}</div>
+      <div class="flex text-gray-500">{{ wordCount }}</div>
+    </div>
+  </div>
 </div>`
-
-
 const props = {
-  "backgroundGradient": "linear-gradient(to bottom, #7de2d1, #59c1e8)",
-  "borderRadius": "24px",
-  "padding": "16px",
+  "bgGradient": "linear-gradient(to bottom, #7edfd3, #7eb0e3)",
+  "iconText": "🚲",
   "date": "2025年3月12日",
+  "handEmoji": "👋",
   "greeting": "hi 你好",
+  "lightEmoji": "💡",
   "description": "你可以在这里输入文字尝试一下，支持 Markdown 语法实时渲染。",
   "listItems": [
     "复制粘贴可插入图片",
@@ -48,13 +59,8 @@ const props = {
     "Ctrl+B 加粗文本",
     "二维码可修改隐藏"
   ],
-  "author": "是魔王哒",
-  "wordCount": "字数：86",
-  "dateSize": "18px",
-  "titleSize": "24px",
-  "titleWeight": "bold",
-  "contentSize": "16px",
-  "footerSize": "14px"
+  "signature": "是魔王哒",
+  "wordCount": "字数：86"
 }
 
 export default defineEventHandler(async (event) => {
