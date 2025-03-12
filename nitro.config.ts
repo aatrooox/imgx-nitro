@@ -24,6 +24,10 @@ export default defineNitroConfig({
       db: 1, // TODO 和其他服务 区分开
       tls: false,
       port: 6379,
+    },
+    db: {
+      driver: 'fs',
+      base: 'assets'
     }
   },
 });
