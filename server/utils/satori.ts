@@ -1,9 +1,8 @@
 // 取消注释以下导入
 import { renderToString } from 'vue/server-renderer'
-import type { AllowedComponentProps, Component, VNodeProps } from 'vue'
+import type { AllowedComponentProps, VNodeProps } from 'vue'
 import { createSSRApp, h } from 'vue'
 import { html as _html } from 'satori-html'
-import type { SatoriOptions } from 'satori'
 import _satori from 'satori'
 
 // ... 保留现有的接口定义 ...
@@ -35,7 +34,12 @@ export interface VNode {
   }
 }
 
-// ... 保留现有的导入和接口定义 ...
+/**
+ * 获取完全渲染后的 html 字符串（同 md 文章复制到公众号原理）
+ * @param template vue 中的 template 字符串
+ * @param props  根据 vue 中的 props 规则生成的键值对
+ * @returns 完全渲染后的 html 字符串
+ */
 export async function getPreviewHtml(template: string, props: Record<string, any>):Promise<string> {
   try {
      // 创建一个简单的组件，使用传入的模板和props
@@ -47,9 +51,8 @@ export async function getPreviewHtml(template: string, props: Record<string, any
       }
     };
 
-    // 创建 Vue 应用
+    // 创建 Vue 应用 （Vue实例）
     const app = createSSRApp(component, props);
-    
     // 渲染为 HTML 字符串
     const html = await renderToString(app);
 
@@ -60,10 +63,11 @@ export async function getPreviewHtml(template: string, props: Record<string, any
 }
 export async function vueTemplateToSatori(template: string, props: Record<string, any>): Promise<SatoriNode> {
   try {
+    // 完全渲染后的 html 字符串
     const html = await getPreviewHtml(template, props)
     // 使用 satori-html 将 HTML 转换为 Satori 节点
     const satoriNode = _html(html);
-    console.log(`satoriNode`, satoriNode)
+    // console.log(`satoriNode`, satoriNode)
     // 处理 Tailwind 类名转换为样式
     const processTailwindClasses = (twClasses: string): { tw: string, styles: Record<string, string> } => {
       const styles: Record<string, string> = {};
@@ -178,19 +182,3 @@ export async function vueTemplateToSatori(template: string, props: Record<string
     };
   }
 }
-
-// ... 保留原有的其他函数 ...
-// 保留原有的 html 和 satori 函数
-// export async function html<T extends Component>(component: T, props?: ExtractComponentProps<T>): Promise<VNode> {
-//   const App = createSSRApp(component, props || {})
-//   const strComponent = await renderToString(App)
-//   return _html(strComponent)
-// }
-
-// export async function satori<T extends Component>(component: T, options: SatoriOptions & {
-//   props?: ExtractComponentProps<T>
-// }) {
-//   const markup = await html(component, options.props)
-//   const result = await _satori(markup, options)
-//   return result
-// }
