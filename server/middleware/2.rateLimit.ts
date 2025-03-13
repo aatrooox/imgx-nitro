@@ -15,6 +15,8 @@ interface RequestRecord {
 export default defineEventHandler(async (event) => {
   // 获取请求路径
   const path = event.node.req.url || '';
+  // 不校验 OPTIONS
+  if (event.node.req.method !== 'OPTIONS') return; 
   // 定义不同路径的限流规则
   const rateLimitRules: RateLimitRule[] = [
     // 对于同一 id/userid 3 分钟内 最多请求 3 次

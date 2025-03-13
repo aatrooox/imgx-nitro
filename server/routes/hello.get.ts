@@ -40,7 +40,7 @@ const props = {
 }
 
 export default defineEventHandler(async (event) => {
-  const YouSheBiaoTi = await useStorage('db').getItemRaw(`SourceHanSerifCN-Regular-1.otf`)
+  const YouSheBiaoTi = await useStorage('local').getItemRaw(`SourceHanSerifCN-Regular-1.otf`)
   const vNode = await vueTemplateToSatori(templateString, props)
   // console.log(`vNode`, JSON.stringify(vNode, null, 2) )
   const svg = await satori(

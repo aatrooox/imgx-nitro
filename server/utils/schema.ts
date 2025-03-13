@@ -22,14 +22,24 @@ export const imgGenerateSchame = z.object({
 })
 
 // props schame
-export const templatePropsSchame = z.object({
+export const templatePropsSchame = z.array(z.object({
   // 对应不同的属性配置，如颜色间距等
-  type: z.enum(['string', 'number', 'array', 'color', 'select']),
-  name: z.string().default('config'),
-  default: z.any(),
-  options: z.array(z.any()).optional(),
-  required: z.boolean().optional().default(false),
-  description: z.string().optional(),
-  min: z.number().optional(),
-  max: z.number().optional(),
-})
+  type: z.enum(['style', 'content']), // 类型 样式、内容
+  key: z.string(), // props 中的 key值
+  name: z.string().default('名称'), // 表单项名称
+  default: z.any(), // 默认值
+  options: z.array(z.any()).optional(), // 多选
+  required: z.boolean().optional().default(false), // 是否必填
+  description: z.string().optional(), // 备注信息
+  min: z.number().optional(), // 最小值
+  max: z.number().optional(), // 最大值
+})).optional().default([{
+  type: 'style',
+  key: 'key',
+  name: '名称',
+  default: '',
+  required: false,
+  description: '',
+  min: 0,
+  max: 0,
+}])

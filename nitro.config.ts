@@ -17,6 +17,17 @@ export default defineNitroConfig({
       }
     ]
   },
+  // cors 目前还十分难用，需自行配置正向、反向代理解决
+  routeRules: {
+    // '/**': {
+    //   cors: true,
+      // headers: {
+      //   'Access-Control-Allow-Origin': '*',
+      //   'Access-Control-Allow-Methods': '*',
+      //   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      // },
+    // },
+  },
   storage: {
     redis: {
       driver: 'redis',
@@ -25,9 +36,10 @@ export default defineNitroConfig({
       tls: false,
       port: 6379,
     },
-    db: {
+    // db 才是 base
+    local: {
       driver: 'fs',
-      base: 'assets'
+      base: './assets', // 路径
     }
   },
 });
