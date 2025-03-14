@@ -47,7 +47,9 @@ model AccessToken {
   userId    String // 关联到主用户表
   userInfo  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   token     String   @unique
-  roles     String // user,template,preset,all
+  roles     String   @default("user") // user,template,preset,all  预留字段
+  status    Int      @default(1) // 1: 正常，2: 禁用 3 4 5...预留字段
+  scope     String   @default("all") // 生效范围：如 pc? app？ imgx? blog ？预留字段
   isRevoked Boolean  @default(false)
   ip        String?
   expiresAt DateTime

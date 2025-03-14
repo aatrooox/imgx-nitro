@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE `imgx_access_token` ADD COLUMN `scope` VARCHAR(191) NOT NULL DEFAULT 'all',
+    ADD COLUMN `status` INTEGER NOT NULL DEFAULT 1,
+    MODIFY `roles` VARCHAR(191) NOT NULL DEFAULT 'user';
