@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
         })
       }
 
-      const isAuth = await verifyAccessToken(token, {  })
+      const { isAuth, userId } = await verifyAccessToken({ token })
 
       if (!isAuth) {
         throw createError({
@@ -36,6 +36,7 @@ export default defineEventHandler(async (event) => {
         })
       }
        event.context.token = token     
+       event.context.userId = userId     
 
        console.log(`auth0 - ${getRequestURL(event).pathname}`)
       }

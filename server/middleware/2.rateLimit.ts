@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
   // 获取请求路径
   const path = event.node.req.url || '';
   // 不校验 OPTIONS
-  if (event.node.req.method !== 'OPTIONS') return; 
+  if (event.node.req.method === 'OPTIONS') return; 
   // 定义不同路径的限流规则
   const rateLimitRules: RateLimitRule[] = [
     // 对于同一 id/userid 3 分钟内 最多请求 3 次
@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
   // 查找匹配的规则
   const rule = rateLimitRules.find(rule => path.startsWith(rule.path));
   if (!rule) {
-    // console.log(` 无匹配规则 `, )
+    console.log(` 无匹配规则 `, )
     return;
   }
   
@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
   const identifier = rule.strict ? userId || 'common-limit-key' : userId || getRequestIP(event, { xForwardedFor: true }) || 'common-limit-key';
   
   if (!identifier) {
-    // console.log(` 无法识别来源 `, )
+    console.log(` 无法识别来源 `, )
     return;
   }
   
@@ -66,7 +66,7 @@ export default defineEventHandler(async (event) => {
   });
   
   const currentData = await storage.getItem<RequestRecord>(key);
-
+  // console.log(`currentData`, currentData)
   // 如何超出限制次数，抛出错误
   if (currentData!.count > rule.limit) {
     const resetTime = currentData!.timestamp + rule.duration;

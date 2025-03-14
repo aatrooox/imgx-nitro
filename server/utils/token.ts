@@ -5,38 +5,71 @@ import useNanoId from './nanoid'
 //   const token = await new jose.SignJWT(payload).setProtectedHeader({ alg: 'HS256' }).setExpirationTime('1h').sign(secret)
 //   return token
 // }
+interface CachedUserValue {
+  userId: string
+  scope: string
+  expiresAt: Date
+  isRevoked: boolean
+}
 
+interface CachedTokenValue {
+  token: string
+  expiresAt: Date
+  isRevoked: boolean
+}
 /**
  *  为用户生成 access token
  * @param userId 用户id
  * @returns token
  */
-export async function generateAccessToken(userId: string): Promise<[string, Date]> {
+export async function generateAccessToken(userId: string, scope: string = 'all'): Promise<[string, Date]> {
+  // 先看是否已经给用户生成了 token
+  const cached = await useCachedToken(userId, scope)
+  if (cached) {
+    return [cached.token, cached.expiresAt]
+  }
+  // 如果是第一次登录，则生成 token
   const token = useNanoId()
   const expiresAt = new Date()
   expiresAt.setDate(expiresAt.getDate() + 7)
-  await useStorage('redis').setItem(`accessToken:${token}`, {
-    userId,
+  // 用于 login 接口判断重复
+  await useStorage('redis').setItem(`${userId}:${scope}`, {
+    token,
     expiresAt,
     isRevoked: false,
-  }, { ttl: 60 * 60 * 24 } )
+  }, { ttl: 60 * 60 * 24 })
+  // 用于其他接口鉴权
+  await useStorage('redis').setItem(`token:${token}`, {
+    userId,
+    scope,
+    expiresAt,
+    isRevoked: false,
+  }, { ttl: 60 * 60 * 24 })
   return [token, expiresAt]
 }
 
-export async function useCachedToken(token: string) {
+export async function useCachedToken(userId: string, scope: string = 'all') {
   const storage = useStorage('redis')
-  const cachedToken = await storage.getItem<{userId: string, expiresAt: Date, isRevoked: boolean}>(`accessToken:${token}`)
+  const cachedToken = await storage.getItem<CachedTokenValue>(`${userId}:${scope}`)
   return cachedToken
 }
-
+export async function useCachedUser(token: string) {
+  const storage = useStorage('redis')
+  const cachedToken = await storage.getItem<CachedUserValue>(`token:${token}`)
+  return cachedToken
+}
 /**
  *  在 redis 里撤销 token
- * @param token 被校验的 token
- * @param userId userId
+ * @param userId 用户id
+ * @param scope 作用范围
  */
-export async function revokeCachedToken(token: string, userId?: string) {
-  await useStorage('redis').setItem(`accessToken:${token}`, {
-    userId: userId,
+export async function revokeCachedToken(userId: string, scope: string = 'all') {
+  const tokenInfo = await useCachedToken(userId, scope)
+  await useStorage('redis').setItem(`${userId}:${scope}`, {
+    isRevoked: true,
+  }, { ttl: 60 * 60 * 24 })
+
+  await useStorage('redis').setItem(`token:${tokenInfo.token}`, {
     isRevoked: true,
   }, { ttl: 60 * 60 * 24 })
 }
@@ -45,25 +78,72 @@ export async function revokeCachedToken(token: string, userId?: string) {
  * @param token 被校验的 token
  * @returns boolean
  */
-export async function verifyAccessToken(token: string, payload) {
-  const cachedToken = await useCachedToken(token)
+export async function verifyAccessToken({ token }: { token?: string }): Promise<{ isAuth: boolean, userId?: string, scope?: string }> {
+  const cachedUser = await useCachedUser(token)
+  // 有缓存
+  if (cachedUser) {
+    if (cachedUser.isRevoked || new Date(cachedUser.expiresAt) < new Date()) {
+      return {
+        isAuth: false,
+        userId: cachedUser.userId,
+        scope: cachedUser.scope
+      }
+    }
+
+    return {
+      isAuth: true,
+      userId: cachedUser.userId,
+      scope: cachedUser.scope
+    }
+  }
+  // 无缓存
+
+  const tokenData = await prisma.accessToken.findFirst({
+    where: {
+      token,
+    },
+  })
+
+  // 已经无效了了, 写入到缓存中避免多次去查库
+  if (tokenData.isRevoked || new Date(tokenData.expiresAt) < new Date()) {
+    await useStorage('redis').setItem(`token:${token}`, {
+      isRevoked: true,
+    }, { ttl: 60 * 60 * 24 })
+    return {
+      isAuth: false,
+      userId: tokenData.userId,
+      scope: tokenData.scope
+    }
+  }
+
+  return {
+    isAuth: true,
+    userId: tokenData.userId,
+    scope: tokenData.scope
+  }
+}
+
+export async function verifyAccessUser({ userId, scope = 'all' }: { userId?: string, scope?: string }) {
+  // 没有传 token，则按 userId + scope 校验  
+  const cachedToken = await useCachedToken(userId, scope)
   // 如果命中缓存 则不查库
   if (cachedToken) {
-    if (cachedToken.isRevoked || new Date(cachedToken.expiresAt) < new Date())  {
+    if (cachedToken.isRevoked || new Date(cachedToken.expiresAt) < new Date()) {
       return false
     }
 
     return true
   }
 
-  const tokenData = await prisma.accessToken.findUnique({
+  const tokenData = await prisma.accessToken.findFirst({
     where: {
-      token,
+      userId,
+      scope
     },
   })
   // 已经无效了了, 写入到缓存中避免多次去查库
-  if (tokenData.isRevoked || new Date(tokenData.expiresAt) < new Date())  {
-    revokeCachedToken(token, payload.userId || tokenData.userId)
+  if (tokenData.isRevoked || new Date(tokenData.expiresAt) < new Date()) {
+    revokeCachedToken(userId, scope)
     return false
   }
 
@@ -71,48 +151,50 @@ export async function verifyAccessToken(token: string, payload) {
 
 }
 /**
- * 撤销 token
+ * 撤销 token, 更新 mysql redis 中的 token 信息
  * @param param0 { token, userId }
  */
-export async function revokeAccessToken({ token, userId }: { token?: string, userId?: string }) {
+export async function revokeAccessToken({ token, userId, scope = 'all' }: { userId: string, token?: string, scope?: string }) {
   const revokeToken = async () => {
+    const whereOption: any = { userId, scope }
+    if (token) {
+      whereOption.token = token
+    }
+
     await prisma.accessToken.update({
-      where: {
-        token,
-      },
+      where: whereOption,
       data: {
         isRevoked: true,
       },
     })
-    revokeCachedToken(token)
+
+    revokeCachedToken(userId, scope)
   }
-
-  // 如果只传了 userId 则撤销此人所有的 token
-  if (userId) {
-    if ( !token ) {
-      const tokens = await prisma.accessToken.findMany({
-        where: {
-          userId,
-        },
-      })
-
-      tokens.forEach(async (tokenInfo) => {
-        await revokeCachedToken(tokenInfo.token)
-      })
-
-      await prisma.accessToken.updateMany({
-        where: {
-          userId,
-        },
-        data: {
-          isRevoked: true,
-        },
-      })
-
-    } else {
-      await revokeToken()
-    }
-  } else {
+  
+  if (token) {
     await revokeToken()
+    return
   }
+
+  const tokens = await prisma.accessToken.findMany({
+    where: {
+      userId,
+      scope
+    },
+  })
+
+  // 移除所有userId && scope 下的 token，未来可能需要
+  tokens.forEach(async (tokenInfo) => {
+    await revokeCachedToken(tokenInfo.token, tokenInfo.scope)
+  })
+
+  await prisma.accessToken.updateMany({
+    where: {
+      userId,
+      scope
+    },
+    data: {
+      isRevoked: true,
+    },
+  })
 }
