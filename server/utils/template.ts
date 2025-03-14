@@ -93,7 +93,7 @@ export function convertPropsToSchame(props: Record<string, PropValue>): Array<Pr
 } catch( error) {
   throw createError({
     status: 500,
-    message: 'Props解析错误：' + JSON.stringify(error),
+    message: 'Schema生成错误[convertPropsToSchame]：' + JSON.stringify(error),
   })
 }
 
@@ -118,6 +118,10 @@ function determineType(value: PropValue): 'size' | 'content' | 'color' {
       return 'color';
     }
     
+    if (value.startsWith('linear-gradient')) {
+      return 'color';
+    }
+
     // 检查是否包含 rgb 或 rgba
     if (value.includes('rgb')) {
       return 'color';

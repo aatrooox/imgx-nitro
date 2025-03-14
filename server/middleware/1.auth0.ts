@@ -6,7 +6,6 @@ export default defineEventHandler(async (event) => {
   // api/v1 开头的接口需要校验token
  
   // POST请求需要校验， GET放过
-  console.log(`getRequestURL(event).pathname`, getRequestURL(event).pathname)
   if (getRequestURL(event).pathname.startsWith('/api/v1') && event.node.req.method !== 'GET') {
     // 排除掉登录和注册
     if (!getWhiteRoutes().includes(getRequestURL(event).pathname)) {

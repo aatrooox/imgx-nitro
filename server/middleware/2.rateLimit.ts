@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
   // 查找匹配的规则
   const rule = rateLimitRules.find(rule => path.startsWith(rule.path));
   if (!rule) {
-    console.log(` 无匹配规则 `, )
+    console.log(`${path} 没有配置限流规则`, )
     return;
   }
   
@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
   const identifier = rule.strict ? userId || 'common-limit-key' : userId || getRequestIP(event, { xForwardedFor: true }) || 'common-limit-key';
   
   if (!identifier) {
-    console.log(` 无法识别来源 `, )
+    console.log(`无法识别来源`, )
     return;
   }
   

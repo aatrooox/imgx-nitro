@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
-    props: z.record(z.string(), z.any()),
+    props: z.union([z.record(z.string(), z.any()), z.string()]),
   }))
 
   if (!body.success) {
@@ -10,7 +10,22 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const schema = convertPropsToSchame(body.data.props)
+  let props = body.data.props
+  if (typeof props === 'string') {
+    try {
+      props = JSON.parse(props)
+    } catch( err) {
+      throw createError({
+        status: 500,
+        message: 'Props参数解析错误：' + JSON.stringify(err),
+      })
+    }
+  }
 
-  return schema
+  const schema = convertPropsToSchame(props as Record<string, any>)
+
+  return {
+    data: schema,
+    msg: 'ok'
+  }
 })
