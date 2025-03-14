@@ -38,18 +38,19 @@ export default defineEventHandler(async (event) => {
     token,
     expiresAt,
     userId: user.id,
-    roles: 'user',
     isRevoked: false,
   }
-  const tokenInfo = await prisma.accessToken.create({ data })
-  // setCookie(event, 'token', token, {
-  //   httpOnly: true,
-  //   sameSite: 'none', // strict lax none
-  //   maxAge: 2592000, // maxAge 优先级高， expires 受客户端时间的影响
-  //   secure: true,
-  //   domain: isProd ? '.zzao.club' : 'localhost',
-  // })
+  const tokenInfo = await prisma.accessToken.upsert({
+    where: {
+      token
+    },
+    create: {
+      ...data
+    },
+    update: {}
+  })
   
+
   return {
     data: {
       token,
