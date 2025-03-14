@@ -22,19 +22,25 @@ export const imgGenerateSchame = z.object({
 })
 
 // props schame
+// style: 'adjacent' | 'monochromatic' | 'complementary' = 'adjacent',
+// count: number = 1,
+// mode: 'light' | 'dark' | 'pure' = 'light'
 export const templatePropsSchame = z.array(z.object({
   // 对应不同的属性配置，如颜色间距等
-  type: z.enum(['style', 'content']), // 类型 样式、内容
+  type: z.enum(['color', 'content', 'size']), // 类型 样式、内容
   key: z.string(), // props 中的 key值
   name: z.string().default('名称'), // 表单项名称
-  default: z.any(), // 默认值
+  default: z.any().optional(), // 默认值
   options: z.array(z.any()).optional(), // 多选
   required: z.boolean().optional().default(false), // 是否必填
   description: z.string().optional(), // 备注信息
   min: z.number().optional(), // 最小值
   max: z.number().optional(), // 最大值
+  randomColor: z.boolean().optional().default(false),
+  color: z.enum(['adjacent', 'monochromatic', 'complementary']).optional(), // 随机颜色选项
+  colorMode: z.enum(['light', 'dark', 'pure']).optional(), // 随机颜色风格 亮色系、暗色系、黑白灰
 })).optional().default([{
-  type: 'style',
+  type: 'content',
   key: 'key',
   name: '名称',
   default: '',

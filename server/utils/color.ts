@@ -98,8 +98,6 @@ export function randomComplementaryGradientColors():GradientColors {
   ]
 }
 
-// ... existing code ...
-
 export function randomGradientColors(
   style: 'adjacent' | 'monochromatic' | 'complementary' = 'adjacent',
   count: number = 1,

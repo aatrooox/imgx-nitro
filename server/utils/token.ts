@@ -1,5 +1,3 @@
-import * as jose from 'jose'
-import type { JWTPayload, CryptoKey } from 'jose'
 import useNanoId from './nanoid'
 // export async function generateAccessToken({ payload, secret, expiresIn = '1h' }) {
 //   const token = await new jose.SignJWT(payload).setProtectedHeader({ alg: 'HS256' }).setExpirationTime('1h').sign(secret)
@@ -33,7 +31,7 @@ export async function generateAccessToken(userId: string, scope: string = 'all')
   const expiresAt = new Date()
   expiresAt.setDate(expiresAt.getDate() + 7)
   // 用于 login 接口判断重复
-  await useStorage('redis').setItem(`${userId}:${scope}`, {
+  await useStorage('redis').setItem(`user:${userId}:${scope}`, {
     token,
     expiresAt,
     isRevoked: false,
@@ -50,7 +48,7 @@ export async function generateAccessToken(userId: string, scope: string = 'all')
 
 export async function useCachedToken(userId: string, scope: string = 'all') {
   const storage = useStorage('redis')
-  const cachedToken = await storage.getItem<CachedTokenValue>(`${userId}:${scope}`)
+  const cachedToken = await storage.getItem<CachedTokenValue>(`user:${userId}:${scope}`)
   return cachedToken
 }
 export async function useCachedUser(token: string) {
@@ -65,7 +63,7 @@ export async function useCachedUser(token: string) {
  */
 export async function revokeCachedToken(userId: string, scope: string = 'all') {
   const tokenInfo = await useCachedToken(userId, scope)
-  await useStorage('redis').setItem(`${userId}:${scope}`, {
+  await useStorage('redis').setItem(`user:${userId}:${scope}`, {
     isRevoked: true,
   }, { ttl: 60 * 60 * 24 })
 

@@ -24,4 +24,9 @@ export default defineEventHandler(async (event) => {
       propsSchema: body.data.propsSchema
     }
   })
+
+  return {
+    data: template,
+    msg: 'ok'
+  }
 })
