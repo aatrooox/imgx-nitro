@@ -68,8 +68,8 @@ model Preset {
   userId       String // 关联到主用户表
   name         String
   description  String?
-  styleProps   Json // 预设包含了一组固定样式
-  contentProps Json // 和一组动态内容
+  styleProps   Json // 预设包含了一组样式预设 预设不一定是全部,也支持在参数里覆盖掉这些样式或内容
+  contentProps Json // 和一组内容预设
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

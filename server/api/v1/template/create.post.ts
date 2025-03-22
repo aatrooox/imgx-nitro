@@ -4,7 +4,8 @@ export default defineEventHandler(async (event) => {
     template: z.string(),
     props: z.record(z.string(), z.any()),
     userId: z.string(),
-    // 创建模板时编写的 props 会自动生成 schema，当在 preset 中选择了模板后，需要按 schema 的格式来填写数据
+    // 创建模板时编写的 props 会自动生成 schema，生成schema需要自己填写一组默认内容, 用于展示自己的模板以及确认schema解析勘误
+    // 当在 preset 中选择了模板后，需要按 schema 的格式来填写数据
     propsSchema: templatePropsSchame
   }))
 

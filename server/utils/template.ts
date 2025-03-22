@@ -103,7 +103,7 @@ export function convertPropsToSchame(props: Record<string, PropValue>): Array<Pr
 /**
  * 判断属性值的类型
  * @param value 属性值
- * @returns 'style' 或 'content'
+ * @returns 'size' | 'content' | 'color'
  */
 function determineType(value: PropValue): 'size' | 'content' | 'color' {
   // 如果是数组，检查第一个元素
