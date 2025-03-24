@@ -138,6 +138,9 @@ function determineType(value: PropValue): 'size' | 'content' | 'color' {
     }
   }
   
+  if (typeof value === 'number') {
+    return 'size';
+  }
   // 默认为内容类型
   return 'content';
 }

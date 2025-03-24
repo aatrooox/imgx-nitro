@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `imgx_template` ADD COLUMN `height` INTEGER NULL DEFAULT 100,
+    ADD COLUMN `width` INTEGER NULL DEFAULT 100;

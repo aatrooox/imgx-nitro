@@ -7,7 +7,6 @@ export default defineEventHandler(async (event) => {
     styleProps: z.record(z.string(), z.any()),
     userId: z.string(),
     description: z.string().optional(),
-    // 创建模板时编写的 props 会自动生成 schema，当在 preset 中选择了模板后，需要按 schema 的格式来填写数据
     contentProps: z.record(z.string(), z.any()),
   }))
 

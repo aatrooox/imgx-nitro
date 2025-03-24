@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
   }
 
   let props = body.data.props
+  console.log(`typeof props`, typeof props)
   if (typeof props === 'string') {
     try {
       props = JSON.parse(props)

@@ -68,7 +68,8 @@ model Preset {
   userId       String // 关联到主用户表
   name         String
   description  String?
-  styleProps   Json // 预设包含了一组样式预设 预设不一定是全部,也支持在参数里覆盖掉这些样式或内容
+  contentKeys  String? // 指定内容字段的顺序,用于解决GET请求时内容参数插入问题
+  styleProps   Json // 预设包含了一组样式预设 预设不一定是全部,也支持在参数里覆盖
   contentProps Json // 和一组内容预设
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -79,6 +80,8 @@ model Preset {
 model Template {
   id          String   @id @default(uuid(7))
   name        String
+  width       Int?     @default(100) // 多大尺寸最适合此模板
+  height      Int?     @default(100)
   template    String   @db.Text
   props       Json // 存储默认的 props 配置
   propsSchema Json // 属性的描述和验证规则 Preset 要利用这个 schema 生成样式表单 创建 template 时要明确哪些是样式配置，哪些是动态内容
