@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v0.2.0
+
+
+### 🚀 Enhancements
+
+- 增加 utils/apis ([f5fed16](https://github.com/aatrooox/imgx-nitro/commit/f5fed16))
+- Pm2配置文件改为 yml；测试原模板是否有效 ([07deb45](https://github.com/aatrooox/imgx-nitro/commit/07deb45))
+- Cookie+jwt 改为 nanoid+mysql 鉴权；测试 template 相关接口 ([69f2961](https://github.com/aatrooox/imgx-nitro/commit/69f2961))
+- Token 表增加预留字段 ([9d3ae01](https://github.com/aatrooox/imgx-nitro/commit/9d3ae01))
+- 调整 token utils；redis 双向存储 ([bca0123](https://github.com/aatrooox/imgx-nitro/commit/bca0123))
+- 新增 template props => schame 转换逻辑；完善其他CURD接口 ([927f579](https://github.com/aatrooox/imgx-nitro/commit/927f579))
+- Color/template/preset 相关接口 ([a4eb2d8](https://github.com/aatrooox/imgx-nitro/commit/a4eb2d8))
+- 完善接口逻辑和表结构 ([9f4747d](https://github.com/aatrooox/imgx-nitro/commit/9f4747d))
+
+### 🩹 Fixes
+
+- 修复 token 生成插入问题 ([51035a0](https://github.com/aatrooox/imgx-nitro/commit/51035a0))
+- 修复 shema 生成相关 ([f828a1c](https://github.com/aatrooox/imgx-nitro/commit/f828a1c))
+
+### ✅ Tests
+
+- 基于template+props 生成 svg ([69b0e2f](https://github.com/aatrooox/imgx-nitro/commit/69b0e2f))
+- 测试AI生成的模板渲染效果 ([395f43c](https://github.com/aatrooox/imgx-nitro/commit/395f43c))
+- 预设功能调试 ([70f4bf2](https://github.com/aatrooox/imgx-nitro/commit/70f4bf2))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.0.1
 
 
