@@ -10,7 +10,10 @@ interface PropsSchemaItem {
   max?: number;
   randomColor?: boolean;
   color?: 'adjacent' | 'monochromatic' | 'complementary';
-  colorMode?: 'light' | 'dark' | 'pure'
+  colorMode?: 'light' | 'dark' | 'pure',
+  isMultiple?: boolean,
+  separator?: string,
+  values?: any[]
 }
 
 type PropValue = string | string[] | number;
@@ -62,14 +65,17 @@ export function convertPropsToSchame(props: Record<string, PropValue>): Array<Pr
     // 判断属性类型
     const type = determineType(value);
     
+    const isMultiple = Array.isArray(value)
     // 创建基础配置项
     const schemaItem: PropsSchemaItem = {
       type,
       key,
       name: key, // 默认使用 key 作为名称
-      default: value,
+      default: isMultiple ? value[0] : value,
       required: false,
-      randomColor: false
+      randomColor: false,
+      isMultiple,
+      values: isMultiple ? value.splice(1) : undefined
     };
 
     // 根据类型添加额外配置
@@ -88,6 +94,7 @@ export function convertPropsToSchame(props: Record<string, PropValue>): Array<Pr
       }
     }
 
+    
     result.push(schemaItem);
   }
 } catch( error) {

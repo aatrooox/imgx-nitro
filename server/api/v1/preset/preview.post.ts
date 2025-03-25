@@ -4,6 +4,8 @@ export default defineEventHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     id: z.string(),
     props: z.record(z.string(), z.any()),
+    width: z.number(),
+    height: z.number(),
   }))
  
   if (!body.success) {
@@ -30,8 +32,8 @@ export default defineEventHandler(async (event) => {
     vNode
     ,
     {
-      width: template.width,
-      height: template.height,
+      width: body.data.width || template.width,
+      height: body.data.height || template.height,
       fonts: [
         {
           name: 'YouSheBiaoTi',
@@ -43,7 +45,7 @@ export default defineEventHandler(async (event) => {
     }
   )
 
-  console.log(`svg`, svg)
+  // console.log(`svg`, svg)
   // setHeader(event, 'Content-Type', 'image/svg+xml')
   // setHeader(event, 'Cache-Control', 'public, max-age=3600, immutable')
 

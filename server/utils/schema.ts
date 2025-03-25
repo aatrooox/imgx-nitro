@@ -32,10 +32,13 @@ export const templatePropsSchame = z.array(z.object({
   name: z.string().default('名称'), // 表单项名称
   default: z.any().optional(), // 默认值
   options: z.array(z.any()).optional(), // 多选
+  isMultiple: z.boolean().optional().default(false), // 是否多选
   required: z.boolean().optional().default(false), // 是否必填
   description: z.string().optional(), // 备注信息
   min: z.number().optional(), // 最小值
   max: z.number().optional(), // 最大值
+  separator: z.string().optional(), // 多选时值列表分隔符
+  values: z.array(z.any()).optional(), // 多选时值列表
   randomColor: z.boolean().optional().default(false),
   color: z.enum(['adjacent', 'monochromatic', 'complementary']).optional(), // 随机颜色选项
   colorMode: z.enum(['light', 'dark', 'pure']).optional(), // 随机颜色风格 亮色系、暗色系、黑白灰
@@ -45,6 +48,7 @@ export const templatePropsSchame = z.array(z.object({
   name: '名称',
   default: '',
   required: false,
+  isMultiple: false,
   description: '',
   min: 0,
   max: 0,

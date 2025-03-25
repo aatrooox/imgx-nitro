@@ -4,6 +4,8 @@ export default defineEventHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     name: z.string(),
     templateId: z.string(),
+    width: z.number().optional(),
+    height: z.number().optional(),
     styleProps: z.record(z.string(), z.any()),
     userId: z.string(),
     code: z.string().optional(),
@@ -30,6 +32,8 @@ export default defineEventHandler(async (event) => {
       name: body.data.name,
       templateId: body.data.templateId,
       styleProps: body.data.styleProps,
+      width: body.data.width,
+      height: body.data.height,
       code,
       userId: body.data.userId,
       description: body.data.description,
