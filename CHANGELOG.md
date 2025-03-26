@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.9
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.8...v0.2.9)
+
+### ✅ Tests
+
+- Yml build ([07e7419](https://github.com/aatrooox/imgx-nitro/commit/07e7419))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.2.8
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.7...v0.2.8)
