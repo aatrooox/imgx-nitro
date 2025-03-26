@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const YouSheBiaoTi = await useStorage('local').getItemRaw(`SourceHanSerifCN-Regular-1.otf`)
+  const YouSheBiaoTi = await useStorage('assets:server').getItemRaw(`SourceHanSerifCN-Regular-1.otf`)
 
   // 查询当前预设的模板
   const template = await prisma.template.findFirst({ 

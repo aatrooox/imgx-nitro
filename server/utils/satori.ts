@@ -194,7 +194,7 @@ export async function renderErrorSvg(errMsg: string, options: { width: number, h
       children: `${errMsg}`
     }
   };
-  const YouSheBiaoTiHei = await useStorage('local').getItemRaw(`YouSheBiaoTiHei-2.ttf`)
+  const YouSheBiaoTiHei = await useStorage('assets:server').getItemRaw(`YouSheBiaoTiHei-2.ttf`)
 
   const svg = await _satori(
     vNode

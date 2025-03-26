@@ -77,8 +77,8 @@ export default defineEventHandler(async (event) => {
     ...styleFinalProps
   })
 
-  const YouSheBiaoTiHei = await useStorage('local').getItemRaw(`YouSheBiaoTiHei-2.ttf`)
-  const DouyinSansBold = await useStorage('local').getItemRaw(`DouyinSansBold.otf`)
+  const YouSheBiaoTiHei = await useStorage('assets:server').getItemRaw(`YouSheBiaoTiHei-2.ttf`)
+  const DouyinSansBold = await useStorage('assets:server').getItemRaw(`DouyinSansBold.otf`)
   // console.log(`vNode`, JSON.stringify(vNode, null, 2) )
   const svg = await satori(
     vNode

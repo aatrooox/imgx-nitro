@@ -37,9 +37,9 @@ export default defineNitroConfig({
       port: 6379,
     },
     // db 才是 base
-    local: {
-      driver: 'fs',
-      base: './assets', // 路径
-    }
+    // local: {
+    //   driver: 'fs',
+    //   base: './assets', // 路径
+    // }
   },
 });
