@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.0
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.13...v0.3.0)
+
+### 🩹 Fixes
+
+- Assets 目录挂载错误 ([d96655e](https://github.com/aatrooox/imgx-nitro/commit/d96655e))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.2.13
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.12...v0.2.13)
