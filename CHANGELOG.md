@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.8
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.7...v0.2.8)
+
+### 🏡 Chore
+
+- Prisma ([ca9fcb1](https://github.com/aatrooox/imgx-nitro/commit/ca9fcb1))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.2.7
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.6...v0.2.7)
