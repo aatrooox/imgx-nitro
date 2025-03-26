@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.6
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.5...v0.2.6)
+
+### 🩹 Fixes
+
+- Build ([0a6f124](https://github.com/aatrooox/imgx-nitro/commit/0a6f124))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.2.5
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.4...v0.2.5)
