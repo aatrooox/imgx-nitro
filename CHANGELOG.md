@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.5
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.4...v0.2.5)
+
+### 🏡 Chore
+
+- Port ([b72306f](https://github.com/aatrooox/imgx-nitro/commit/b72306f))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.2.4
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.3...v0.2.4)
