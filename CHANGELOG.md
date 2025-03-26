@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.13
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.12...v0.2.13)
+
+### ✅ Tests
+
+- 线上调试 ([7793e3e](https://github.com/aatrooox/imgx-nitro/commit/7793e3e))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.2.12
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.11...v0.2.12)
