@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.1
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.0...v0.2.1)
+
+### 🏡 Chore
+
+- 完善配置 ([43295bc](https://github.com/aatrooox/imgx-nitro/commit/43295bc))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.2.0
 
 
