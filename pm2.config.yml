@@ -1,8 +1,0 @@
-# 生产环境配置
-apps:
-  - name: imgx-nitro
-    script: ./server/index.mjs
-    exec_mode: fork
-    instances: 1
-    env:
-      PORT: 5771
