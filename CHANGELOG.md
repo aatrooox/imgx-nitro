@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.10
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.9...v0.2.10)
+
+### ✅ Tests
+
+- Port ([1ca1cf9](https://github.com/aatrooox/imgx-nitro/commit/1ca1cf9))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.2.9
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.8...v0.2.9)
