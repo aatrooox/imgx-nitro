@@ -11,7 +11,7 @@
   "type": "module",
   "scripts": {
     "build": "nitro build",
-    "dev": "nitro dev --port 5770",
+    "dev": "nitro dev --port 5777",
     "prepare": "nitro prepare",
     "preview": "node .output/server/index.mjs",
     "release": "pnpm release:patch",

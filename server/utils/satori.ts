@@ -182,3 +182,35 @@ export async function vueTemplateToSatori(template: string, props: Record<string
     };
   }
 }
+
+// 返回一个错误的svg图，以便在img标签中正常展示
+export async function renderErrorSvg(errMsg: string, options: { width: number, height: number }) {
+  const width = options.width || 300
+  const height = options.height || 100
+  const vNode = {
+    type: 'div',
+    props: {
+      style: { color: 'red', padding: '20px', textAlign: 'center', fontSize: '26px', fontFamily: 'YouSheBiaoTiHei' },
+      children: `${errMsg}`
+    }
+  };
+  const YouSheBiaoTiHei = await useStorage('local').getItemRaw(`YouSheBiaoTiHei-2.ttf`)
+
+  const svg = await _satori(
+    vNode
+    ,
+    {
+      width,
+      height,
+      fonts: [
+        {
+          name: 'YouSheBiaoTiHei',
+          data: YouSheBiaoTiHei,
+          weight: 400,
+          style: 'normal',
+        }
+      ],
+    }
+  ) 
+  return svg
+}

@@ -1,5 +1,6 @@
 import { Resvg } from '@resvg/resvg-js'
 import satori from 'satori';
+import { renderErrorSvg } from '~/utils/satori';
 export default defineEventHandler(async (event) => {
   const text = decodeURI(getRouterParam(event, 'text') || '')
   const presetCode = getRouterParam(event, 'presetCode');
@@ -32,10 +33,12 @@ export default defineEventHandler(async (event) => {
   })
 
   if (!preset) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: '预设不存在'
-    })
+    setHeader(event, 'Content-Type', 'image/svg+xml')
+    setHeader(event, 'Cache-Control', 'public, max-age=3600, immutable')
+    
+    const svg = await renderErrorSvg('不存在的预设码', {width: 300, height: 100})
+
+    return svg
   }
   
   const { width, height, contentProps, styleProps } = preset;
@@ -73,8 +76,8 @@ export default defineEventHandler(async (event) => {
     ...styleFinalProps
   })
 
-  const YouSheBiaoTi = await useStorage('local').getItemRaw(`SourceHanSerifCN-Regular-1.otf`)
-
+  const YouSheBiaoTiHei = await useStorage('local').getItemRaw(`YouSheBiaoTiHei-2.ttf`)
+  const DouyinSansBold = await useStorage('local').getItemRaw(`DouyinSansBold.otf`)
   // console.log(`vNode`, JSON.stringify(vNode, null, 2) )
   const svg = await satori(
     vNode
@@ -85,7 +88,13 @@ export default defineEventHandler(async (event) => {
       fonts: [
         {
           name: 'YouSheBiaoTiHei',
-          data: YouSheBiaoTi,
+          data: YouSheBiaoTiHei,
+          weight: 400,
+          style: 'normal',
+        },
+        {
+          name: 'DouyinSansBold',
+          data: DouyinSansBold,
           weight: 400,
           style: 'normal',
         }
