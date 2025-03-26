@@ -4,4 +4,4 @@ apps:
     script: ./server/index.mjs
     exec_mode: fork
     instances: 1
-    port: 5770
+    port: 5771

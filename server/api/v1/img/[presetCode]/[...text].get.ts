@@ -1,5 +1,4 @@
 import { Resvg } from '@resvg/resvg-js'
-import type { Component } from 'vue';
 import satori from 'satori';
 export default defineEventHandler(async (event) => {
   const text = decodeURI(getRouterParam(event, 'text') || '')
