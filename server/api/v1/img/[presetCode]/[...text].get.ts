@@ -17,6 +17,7 @@ export default defineEventHandler(async (event) => {
   const contents = text.split('/')
 
   const customStyleProps: Record<string, any> = query.data;
+  console.log(`customStyleProps ======>`, customStyleProps)
   const preset = await prisma.preset.findUnique({
     where: {
       code: presetCode
