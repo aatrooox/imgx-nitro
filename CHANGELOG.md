@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.7
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.6...v0.2.7)
+
+### ✅ Tests
+
+- Prisma build ([5771f1b](https://github.com/aatrooox/imgx-nitro/commit/5771f1b))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.2.6
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.5...v0.2.6)
