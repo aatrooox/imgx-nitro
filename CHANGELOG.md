@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.4
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.3...v0.2.4)
+
+### 🏡 Chore
+
+- Pm2 config ([1663dbf](https://github.com/aatrooox/imgx-nitro/commit/1663dbf))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.2.3
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.2...v0.2.3)
