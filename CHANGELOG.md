@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.2
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.1...v0.2.2)
+
+### 🩹 Fixes
+
+- Pm2 ([c97356e](https://github.com/aatrooox/imgx-nitro/commit/c97356e))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.2.1
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.0...v0.2.1)
