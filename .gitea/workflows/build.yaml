@@ -32,6 +32,7 @@ jobs:
           cp -R .output/* /root/server/imgx-nitro/
           cp -R prisma/* /root/server/imgx-nitro/prisma/
           cp -R pm2.config.cjs /root/server/imgx-nitro/pm2.config.cjs
+          cp -R package.json /root/server/imgx-nitro/package.json
       # pm2 重启时使用 pm2 restart pm2.config.yml
       - name: 启动项目
         env: 
