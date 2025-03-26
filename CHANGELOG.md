@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.3
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.2...v0.2.3)
+
+### 🩹 Fixes
+
+- Pm2 => cjs ([0e837bb](https://github.com/aatrooox/imgx-nitro/commit/0e837bb))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.2.2
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.1...v0.2.2)
