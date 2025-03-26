@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.12
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.11...v0.2.12)
+
+### 🚀 Enhancements
+
+- 新增错误SVG生成 ([651fc55](https://github.com/aatrooox/imgx-nitro/commit/651fc55))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.2.11
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.10...v0.2.11)
