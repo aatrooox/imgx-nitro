@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.3.1
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.3.0...v0.3.1)
+
+### 📖 Documentation
+
+- 更新文档 ([f47b0a2](https://github.com/aatrooox/imgx-nitro/commit/f47b0a2))
+- 更新文档 ([181170b](https://github.com/aatrooox/imgx-nitro/commit/181170b))
+
+### 🏡 Chore
+
+- 优化代码，增加调试信息 ([d73777d](https://github.com/aatrooox/imgx-nitro/commit/d73777d))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.3.0
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.2.13...v0.3.0)
