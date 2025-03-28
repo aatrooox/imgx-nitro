@@ -27,7 +27,7 @@ export const imgGenerateSchame = z.object({
 // mode: 'light' | 'dark' | 'pure' = 'light'
 export const templatePropsSchame = z.array(z.object({
   // 对应不同的属性配置，如颜色间距等
-  type: z.enum(['color', 'content', 'size']), // 类型 样式、内容
+  type: z.enum(['color', 'content', 'size', 'image']), // 类型 样式、内容、图片
   key: z.string(), // props 中的 key值
   name: z.string().default('名称'), // 表单项名称
   default: z.any().optional(), // 默认值

@@ -41,21 +41,64 @@ export interface VNode {
  * @returns 完全渲染后的 html 字符串
  */
 export async function getPreviewHtml(template: string, props: Record<string, any>):Promise<string> {
+  console.log(`获取预览html`,)
   try {
-     // 创建一个简单的组件，使用传入的模板和props
-     const component = {
+    // 处理 props
+    const processedProps = { ...props }
+    console.log(`processedProps`, Object.keys(processedProps))
+    const iconProps = {}
+    // 循环所有key，找出 image 类型的value
+    Object.keys(processedProps).forEach(key => {
+      console.log(`循环`, key)
+      const value = processedProps[key]
+      if (typeof value === 'string' && value.startsWith('[') && value.endsWith(']')) {
+        console.log(`iconProps`, key, value)
+        iconProps[key] = value
+      }
+    })
+    console.log(`iconProps`, iconProps)
+    // 把 icon 解析出来 getBase64IconURL
+    for (const key in iconProps) {
+      // iconInfo [prefix:iconName:size]
+      const iconStr = iconProps[key]
+
+      const iconInfo = iconStr.slice(1, -1).split(':')
+      if (iconInfo.length < 2) {
+        console.log(`icon ${iconStr} 不合规`)
+        continue
+      }
+      const iconPrefix = iconInfo[0]
+      const iconName = iconInfo[1]
+      const iconSize = iconInfo[2] || 50
+      const base64IconURL = await getBase64IconURL(`${iconPrefix}:${iconName}`, iconSize)
+      
+      if (!base64IconURL) {
+        console.log(`icon ${iconStr} 解析失败`)
+        processedProps[key] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAmdJREFUeF7tmQtuwyAMhsPJtp5s28nWnYzVU4gcYoNNWHGKI01aVajNx+8HJCyTP2Hy9S8OwBUwOQEPgckF4EnQQ8BDYHICHgKTC8CrgIeAh8DkBDwESgKIMb6HEO4SkWjGpt+DOfC/1AaeJ5kj8YlVQIzxe1mWPwcfPn6FED4pEOsiPiRjYX6MEX7nDY3HP8vaQXPBVnpuHAip/ySA1UlsCAySxqix4UErh0WA4oRVgh2zSfcQwo2wBZBF/msAcMZyp0hY8UFKEkppTA5xBQiq3D0MbAoA6T8HAMs/GWwGwCiqxmNnTwlA7P+/A2hc/CHGXxHAFusFSJsKrgyAkuMh0WVZ+xB2VwZAJT8KAJRcNsm9GoBDSa0tsPY9zqg1NeGxz0iC0jJpXgEAjmqLU7eIwW47zNT/bgpQ+KTqA8jdqBVuqkXtBWBthVXNlKRr5ELAKgCqokj3Ra4A5uAhNbRrhTsr4MzG6ACchNA9ByT6JzpLPYDMKHyEY2z+PCUJEic+sAt/Up/aAZS0X5N47XsEuVgGNfF3ug9QGivWeQdA3wNQfQB1hofrMvW9pTUFiM7mTHIj47am0CsAgDVIjsPFO0IOhDUAZ2r39QGs/URLB9e0+IK9MWUQlTlVH9+S/JAt0SUMjFdnWKIhORjjnBd2cXDihN0XvZCh8gBzd0AqqgeAPMa1LzfSGmDBP9wLmFrmJzYGl1W2mpwGgDs57a61vhrTwKi9HusGQOOUpbEOwNJujPDFFTCCuiWbrgBLuzHCF1fACOqWbLoCLO3GCF9cASOoW7LpCrC0GyN8cQWMoG7J5vQK+AVP7kZf9uNYzQAAAABJRU5ErkJggg=='
+        continue
+      }
+
+      processedProps[key] = base64IconURL
+    }
+
+    console.log(`processedProps`, processedProps)
+
+    // 创建一个简单的组件，使用传入的模板和props
+    const component = {
       template,
       props: Object.keys(props),
       setup() {
-        return props;
+        
+        const componentProps = { ...processedProps}
+        return componentProps;
       }
     };
 
     // 创建 Vue 应用 （Vue实例）
-    const app = createSSRApp(component, props);
+    const app = createSSRApp(component, processedProps);
     // 渲染为 HTML 字符串
     const html = await renderToString(app);
-
+    console.log(`html`, html)
     return html
   } catch (err) {
     return ''

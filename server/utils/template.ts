@@ -1,5 +1,6 @@
+type PropType = 'size' | 'content' | 'color' | 'image';
 interface PropsSchemaItem {
-  type: 'size' | 'content' | 'color';
+  type: PropType;
   key: string;
   name: string;
   default: any;
@@ -110,9 +111,9 @@ export function convertPropsToSchame(props: Record<string, PropValue>): Array<Pr
 /**
  * 判断属性值的类型
  * @param value 属性值
- * @returns 'size' | 'content' | 'color'
+ * @returns 'size' | 'content' | 'color' | 'image'
  */
-function determineType(value: PropValue): 'size' | 'content' | 'color' {
+function determineType(value: PropValue): PropType {
   // 如果是数组，检查第一个元素
   if (Array.isArray(value)) {
     return value.length > 0 ? determineType(value[0]) : 'content';
@@ -142,6 +143,11 @@ function determineType(value: PropValue): 'size' | 'content' | 'color' {
     // 检查是否是纯数字
     if (!isNaN(Number(value))) {
       return 'size';
+    }
+
+    // 以[]包裹的则为图片
+    if (value.startsWith('[') && value.endsWith(']')) {
+      return 'image';
     }
   }
   
