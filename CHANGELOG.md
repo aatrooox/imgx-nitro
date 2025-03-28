@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.3.2
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.3.1...v0.3.2)
+
+### 🚀 Enhancements
+
+- 支持渲染 iconify 的任意图标 ([f55588a](https://github.com/aatrooox/imgx-nitro/commit/f55588a))
+
+### 🏡 Chore
+
+- 删除调试代码 ([3e24d9f](https://github.com/aatrooox/imgx-nitro/commit/3e24d9f))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.3.1
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.3.0...v0.3.1)
