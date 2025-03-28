@@ -45,21 +45,16 @@ export async function getPreviewHtml(template: string, props: Record<string, any
   try {
     // 处理 props
     const processedProps = { ...props }
-    console.log(`processedProps`, Object.keys(processedProps))
     const iconProps = {}
     // 循环所有key，找出 image 类型的value
     Object.keys(processedProps).forEach(key => {
-      console.log(`循环`, key)
       const value = processedProps[key]
       if (typeof value === 'string' && value.startsWith('[') && value.endsWith(']')) {
-        console.log(`iconProps`, key, value)
         iconProps[key] = value
       }
     })
-    console.log(`iconProps`, iconProps)
     // 把 icon 解析出来 getBase64IconURL
     for (const key in iconProps) {
-      // iconInfo [prefix:iconName:size]
       const iconStr = iconProps[key]
 
       const iconInfo = iconStr.slice(1, -1).split(':')
@@ -81,7 +76,6 @@ export async function getPreviewHtml(template: string, props: Record<string, any
       processedProps[key] = base64IconURL
     }
 
-    console.log(`processedProps`, processedProps)
 
     // 创建一个简单的组件，使用传入的模板和props
     const component = {
@@ -98,7 +92,6 @@ export async function getPreviewHtml(template: string, props: Record<string, any
     const app = createSSRApp(component, processedProps);
     // 渲染为 HTML 字符串
     const html = await renderToString(app);
-    console.log(`html`, html)
     return html
   } catch (err) {
     return ''
