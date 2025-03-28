@@ -2,25 +2,24 @@ import { Resvg } from '@resvg/resvg-js'
 import satori from 'satori';
 import { renderErrorSvg } from '~/utils/satori';
 export default defineEventHandler(async (event) => {
-  const text = decodeURI(getRouterParam(event, 'text') || '')
-  const presetCode = getRouterParam(event, 'presetCode');
   
-  const query = await useSafeValidatedQuery(event, z.object({}).catchall(z.string()));
+  const body = await useSafeValidatedBody(event, z.object({
+    code: z.string(),
+    contentProps: z.record(z.string(), z.any()),
+    styleProps: z.record(z.string(), z.any()),
+  }));
 
-  if (!query.success) {
+  if (!body.success) {
       throw createError({
         statusCode: 400,
-        statusMessage: (query as any).message ?? '参数错误'
+        statusMessage: (body as any).message ?? '参数错误'
       })
     }
   
-  const contents = text.split('/')
 
-  const customStyleProps: Record<string, any> = query.data;
-  console.log(`customStyleProps ======>`, customStyleProps)
   const preset = await prisma.preset.findUnique({
     where: {
-      code: presetCode
+      code: body.data.code
     },
     include: {
       templateInfo: {
@@ -44,23 +43,25 @@ export default defineEventHandler(async (event) => {
   
   const { width, height, contentProps, styleProps } = preset;
 
-  const { contentKeys, propsSchema, template } = preset.templateInfo;
+  const { template } = preset.templateInfo;
 
   // 处理自定义内容props
   let customContentProps =  {}
-  const contentKeysArray = contentKeys.split(',')
-  contents.forEach((value:string, index: number) => {
-    customContentProps[contentKeysArray[index]] = value
+
+  // 必须是 contentProps 里存在的key 才合并进去
+  Object.keys(body.data.contentProps).forEach((key:string, index: number) => {
+    if (contentProps[key]) {
+        customContentProps[key] = body.data.contentProps[key]
+    }
   });
   
-  // 处理自定义样式
-  for (const key in customStyleProps) {
-    const schemItem = (propsSchema as any[]).find((item: any) => item.key === key);
-
-    if (customStyleProps[key]) {
-      customStyleProps[key] = schemItem.type === 'size' ? parseInt(customStyleProps[key]) : customStyleProps[key]
+  // 必须是 styleProps 里存在的key 才合并进去
+  let customStyleProps = {}
+  Object.keys(body.data.styleProps).forEach((key:string, index: number) => {
+    if (styleProps[key]) {
+      customStyleProps[key] = body.data.styleProps[key]
     }
-  }
+  });
   
   const contentFinalProps = {
     ...(contentProps as Record<string, any>),

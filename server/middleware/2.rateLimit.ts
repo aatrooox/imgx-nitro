@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
   // 查找匹配的规则
   const rule = rateLimitRules.find(rule => path.startsWith(rule.path));
   if (!rule) {
-    console.log(`${path} 没有配置限流规则`, )
+    console.log(`NO-LIMIT - ${path}`, )
     return;
   }
   

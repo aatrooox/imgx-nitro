@@ -2,7 +2,8 @@ import satori from "satori"
 
 export default defineEventHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
-    id: z.string(),
+    id: z.string().optional(),
+    templateStr: z.string().optional(),
     props: z.record(z.string(), z.any()),
     width: z.number(),
     height: z.number(),
@@ -15,39 +16,32 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const YouSheBiaoTi = await useStorage('assets:server').getItemRaw(`SourceHanSerifCN-Regular-1.otf`)
+  let templateStr = ''
+  if (body.data.id) {
+     // 查询当前模板
+    const template = await prisma.template.findFirst({ 
+      where: { id: body.data.id },
+    })
 
-  // 查询当前预设的模板
-  const template = await prisma.template.findFirst({ 
-    where: { id: body.data.id },
-   
-  })
+    templateStr = template?.template || ''
 
-  const templateStr = template?.template || ''
+    body.data.width = template?.width || body.data.width
+    body.data.height = template?.height || body.data.height
+  } else {
+    templateStr = body.data.templateStr || ''
+    if (!templateStr) {
+      throw createError({
+        statusCode: 400,
+        message: '模板字符串不能为空'
+      })
+    }
+  }
+ 
 
   const vNode = await vueTemplateToSatori(templateStr, body.data.props)
 
   // console.log(`vNode`, JSON.stringify(vNode, null, 2) )
-  const svg = await satori(
-    vNode
-    ,
-    {
-      width: body.data.width || template.width,
-      height: body.data.height || template.height,
-      fonts: [
-        {
-          name: 'YouSheBiaoTi',
-          data: YouSheBiaoTi,
-          weight: 400,
-          style: 'normal',
-        }
-      ],
-    }
-  )
-
-  // console.log(`svg`, svg)
-  // setHeader(event, 'Content-Type', 'image/svg+xml')
-  // setHeader(event, 'Cache-Control', 'public, max-age=3600, immutable')
+  const svg = await renderSVGBySatori(vNode, body.data.width, body.data.height)
 
   return {
     data: svg

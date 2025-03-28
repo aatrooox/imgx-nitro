@@ -194,7 +194,9 @@ export async function renderErrorSvg(errMsg: string, options: { width: number, h
       children: `${errMsg}`
     }
   };
-  const YouSheBiaoTiHei = await useStorage('assets:server').getItemRaw(`YouSheBiaoTiHei-2.ttf`)
+
+  const fonts = await $fetch<any[]>('/api/v1/fonts/list', { method: 'POST' })
+
 
   const svg = await _satori(
     vNode
@@ -202,15 +204,42 @@ export async function renderErrorSvg(errMsg: string, options: { width: number, h
     {
       width,
       height,
-      fonts: [
-        {
-          name: 'YouSheBiaoTiHei',
-          data: YouSheBiaoTiHei,
-          weight: 400,
-          style: 'normal',
-        }
-      ],
+      fonts,
     }
   ) 
+  return svg
+}
+
+export async function renderSVGBySatori(vNode: SatoriNode, width: number, height: number) {
+  console.time('加载字体')
+  const YouSheBiaoTiHei = await useStorage('assets:server').getItemRaw(`YouSheBiaoTiHei-2.ttf`)
+  const DouyinSansBold = await useStorage('assets:server').getItemRaw(`DouyinSansBold.otf`)
+  console.timeEnd('加载字体')
+  
+  const fonts: any[] = [
+    {
+      name: 'YouSheBiaoTiHei',
+      data: YouSheBiaoTiHei,
+      weight: 400,
+      style: 'normal',
+    },
+    { 
+      name: 'DouyinSansBold',
+      data: DouyinSansBold,
+      weight: 400,
+      style: 'normal'
+    }
+  ]
+
+  const svg = await _satori(
+    vNode
+    ,
+    {
+      width,
+      height,
+      fonts,
+    }
+  )
+
   return svg
 }
