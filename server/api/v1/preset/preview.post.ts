@@ -25,8 +25,8 @@ export default defineEventHandler(async (event) => {
 
     templateStr = template?.template || ''
 
-    body.data.width = template?.width || body.data.width
-    body.data.height = template?.height || body.data.height
+    body.data.width =  body.data.width || template?.width
+    body.data.height = body.data.height || template?.height
   } else {
     templateStr = body.data.templateStr || ''
     if (!templateStr) {

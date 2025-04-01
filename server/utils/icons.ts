@@ -35,7 +35,7 @@ type IconName = string
  */
 export async function getBase64IconURL(iconName:string, iconSize: number) {
   const svgHTML = await getIconSVGHTML(iconName, iconSize);
-  console.log(`svgHTML`, svgHTML)
+  // console.log(`svgHTML`, svgHTML)
   if (!svgHTML) return null;
    
   const base64SVG = `data:image/svg+xml;base64,${btoa(svgHTML)}`;

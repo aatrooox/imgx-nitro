@@ -41,7 +41,7 @@ export interface VNode {
  * @returns 完全渲染后的 html 字符串
  */
 export async function getPreviewHtml(template: string, props: Record<string, any>):Promise<string> {
-  console.log(`获取预览html`,)
+  // console.log(`获取预览html`,)
   try {
     // 处理 props
     const processedProps = { ...props }
