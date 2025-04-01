@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.3
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.3.2...v0.3.3)
+
+### 🚀 Enhancements
+
+- 预设列表接口 ([9f32845](https://github.com/aatrooox/imgx-nitro/commit/9f32845))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.3.2
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.3.1...v0.3.2)
