@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.4
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.3.3...v0.3.4)
+
+### 🚀 Enhancements
+
+- 完善接口 ([ef96a26](https://github.com/aatrooox/imgx-nitro/commit/ef96a26))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.3.3
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.3.2...v0.3.3)
