@@ -231,18 +231,9 @@ export async function renderErrorSvg(errMsg: string, options: { width: number, h
     }
   };
 
-  const fonts = await $fetch<any[]>('/api/v1/fonts/list', { method: 'POST' })
 
-
-  const svg = await _satori(
-    vNode
-    ,
-    {
-      width,
-      height,
-      fonts,
-    }
-  ) 
+  const svg = await renderSVGBySatori(vNode, width, height)
+  
   return svg
 }
 

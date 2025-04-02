@@ -6,6 +6,18 @@ export default defineEventHandler(async (event) => {
   const style = getRouterParam(event, 'style');
   const mode = getRouterParam(event, 'mode')
   
+  const styleMap = {
+    '1': 'adjacent',
+    '2': 'monochromatic',
+    '3': 'complementary'
+  }
+
+  const modeMap = {
+    '1': 'light',
+    '2': 'dark',
+    '3': 'pure'
+  }
+
   if (!query.success) {
       throw createError({
         statusCode: 400,
@@ -13,22 +25,25 @@ export default defineEventHandler(async (event) => {
       })
   }
   
-  if (!['adjacent', 'monochromatic', 'complementary'].includes(style as string)) {
+  if (!['adjacent', 'monochromatic', 'complementary'].includes(style as string) && !styleMap[style as string]) {
     throw createError({
       statusCode: 400,
       message: '不存在的style'
     })
   }
 
-  if (!['light', 'dark', 'pure'].includes(mode as string)) {
+  if (!['light', 'dark', 'pure'].includes(mode as string) && !modeMap[mode as string]) {
     throw createError({
       statusCode: 400,
       message: '不存在的mode'
     })
   }
   
+  const _style = styleMap[style as string] || style as 'adjacent' | 'monochromatic' | 'complementary'
+  const _mode = modeMap[mode as string] || mode as 'light' | 'dark' | 'pure'
+  
   return {
-    colors: randomGradientColors(style as 'adjacent' | 'monochromatic' | 'complementary', Number(query.data.count), mode as 'light' | 'dark' | 'pure')
-  }
+    colors: randomGradientColors(_style, Number(query.data.count), _mode)
+  } 
 
 });

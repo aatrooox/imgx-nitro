@@ -2,7 +2,6 @@ import { Resvg } from '@resvg/resvg-js'
 import satori from 'satori';
 import { renderErrorSvg } from '~/utils/satori';
 export default defineEventHandler(async (event) => {
-  const text = decodeURI(getRouterParam(event, 'text') || '')
   const presetCode = getRouterParam(event, 'presetCode');
   
   const query = await useSafeValidatedQuery(event, z.object({}).catchall(z.string()));
@@ -14,9 +13,6 @@ export default defineEventHandler(async (event) => {
       })
     }
   
-  const contents = text.split('/')
-
-  const customStyleProps: Record<string, any> = query.data;
   const preset = await prisma.preset.findUnique({
     where: {
       code: presetCode
@@ -43,38 +39,14 @@ export default defineEventHandler(async (event) => {
   
   const { width, height, contentProps, styleProps } = preset;
 
-  const { contentKeys, propsSchema, template } = preset.templateInfo;
+  const { template } = preset.templateInfo;
 
-  // 处理自定义内容props
-  let customContentProps =  {}
-  const contentKeysArray = contentKeys.split(',')
-  contents.forEach((value:string, index: number) => {
-    customContentProps[contentKeysArray[index]] = value
-  });
-  
-  // 处理自定义样式
-  for (const key in customStyleProps) {
-    const schemItem = (propsSchema as any[]).find((item: any) => item.key === key);
-
-    if (customStyleProps[key]) {
-      customStyleProps[key] = schemItem.type === 'size' ? parseInt(customStyleProps[key]) : customStyleProps[key]
-    }
-  }
-  
-  const contentFinalProps = {
+  const props = { 
     ...(contentProps as Record<string, any>),
-    ...customContentProps
+    ...(styleProps as Record<string, any>)
   }
   
-  const styleFinalProps = {
-    ...(styleProps as Record<string, any>),
-    ...customStyleProps
-  }
-  console.log(`contentFinalProps`, contentFinalProps)
-  const vNode = await vueTemplateToSatori(template, {
-    ...contentFinalProps,
-    ...styleFinalProps
-  })
+  const vNode = await vueTemplateToSatori(template, props)
   
   const svg = await renderSVGBySatori(vNode, width, height)
 

@@ -63,6 +63,7 @@ export const generatePresetCode = async (user: User, customCode?: string) => {
     return code 
   }
 }
+
 export const generateRandomCode = (length: number): string => {
   const isThreeDigits = length === 3
   if (isThreeDigits) {
