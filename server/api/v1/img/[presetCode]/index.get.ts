@@ -2,9 +2,10 @@ import { generateImage } from '~/utils/image'
 
 export default defineEventHandler(async (event) => {
   const presetCode = getRouterParam(event, 'presetCode')
-  const format = getQuery(event).format as 'svg' | 'png' || 'png'
   
   const query = await useSafeValidatedQuery(event, z.object({}).catchall(z.string()))
+  const format = query.data.format as 'svg' | 'png' || 'png'
+  const download = query.data.download === '1'
 
   if (!query.success) {
     throw createError({
@@ -40,7 +41,9 @@ export default defineEventHandler(async (event) => {
   const etag = `"${Buffer.from(JSON.stringify(getQuery(event))).toString('base64')}"` 
   setHeader(event, 'ETag', etag)
   setHeader(event, 'Last-Modified', new Date().toUTCString())
-
+  if (download) {
+    setHeader(event, 'Content-Disposition', `attachment; filename="imgx-${presetCode}-${new Date().getTime()}.${format}"`)
+  }
   // 检查客户端缓存
   const ifNoneMatch = getRequestHeader(event, 'if-none-match')
   if (ifNoneMatch === etag) {

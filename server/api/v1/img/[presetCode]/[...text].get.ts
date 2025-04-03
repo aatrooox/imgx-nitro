@@ -3,10 +3,11 @@ import { generateImage } from '~/utils/image'
 export default defineEventHandler(async (event) => {
   const text = decodeURI(getRouterParam(event, 'text') || '')
   const presetCode = getRouterParam(event, 'presetCode')
-  const format = getQuery(event).format as 'svg' | 'png' || 'png'
   
   const query = await useSafeValidatedQuery(event, z.object({}).catchall(z.string()))
-
+  const format = query.data.format as 'svg' | 'png' || 'png'
+  const download = query.data.download === '1'
+  
   if (!query.success) {
     throw createError({
       statusCode: 400,
@@ -69,7 +70,9 @@ export default defineEventHandler(async (event) => {
 
   setHeader(event, 'Content-Type', format === 'svg' ? 'image/svg+xml' : 'image/png')
   setHeader(event, 'Cache-Control', 'public, max-age=3600, immutable')
-  
+  if (download) {
+    setHeader(event, 'Content-Disposition', `attachment; filename="imgx-${presetCode}-${new Date().getTime()}.${format}"`)
+  }
   // 生成强验证器
   const etag = `"${Buffer.from(JSON.stringify(getQuery(event))).toString('base64')}"` 
   setHeader(event, 'ETag', etag)
