@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.4.0
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.3.4...v0.4.0)
+
+### 🚀 Enhancements
+
+- RESTFUL apis ([ea28ed5](https://github.com/aatrooox/imgx-nitro/commit/ea28ed5))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.3.4
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.3.3...v0.3.4)
