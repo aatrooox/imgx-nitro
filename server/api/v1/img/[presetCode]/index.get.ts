@@ -29,6 +29,15 @@ export default defineEventHandler(async (event) => {
     }
   })
 
+  if (!preset) {
+    setHeader(event, 'Content-Type', 'image/svg+xml')
+    setHeader(event, 'Cache-Control', 'public, max-age=3600, immutable')
+    
+    const svg = await renderErrorSvg('不存在的预设码', {width: 300, height: 100})
+
+    return svg
+  }
+  
   const image = await generateImage({
     preset,
     format

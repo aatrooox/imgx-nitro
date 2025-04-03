@@ -15,9 +15,9 @@
     "prepare": "nitro prepare",
     "preview": "node .output/server/index.mjs",
     "release": "pnpm release:patch",
-    "release:patch": "npx changelogen@latest --patch --release --push",
-    "release:minor": "npx changelogen@latest --minor --release --push",
-    "release:major": "npx changelogen@latest --major --release --push"
+    "release:patch": "bunx changelogen@latest --patch --release --push",
+    "release:minor": "bunx changelogen@latest --minor --release --push",
+    "release:major": "bunx changelogen@latest --major --release --push"
   },
   "devDependencies": {
     "nitropack": "latest",

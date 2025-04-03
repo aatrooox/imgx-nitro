@@ -5,6 +5,7 @@ export default defineNitroConfig({
   runtimeConfig: {
     jwtSecret: 'your_secret_key',
   },
+  preset: 'bun',
   imports: {
     presets: [
       {
