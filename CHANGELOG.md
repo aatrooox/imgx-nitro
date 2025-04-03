@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.4.1
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.4.0...v0.4.1)
+
+### 🚀 Enhancements
+
+- 增加 download 参数支持浏览器直接触发下载 ([f07ef28](https://github.com/aatrooox/imgx-nitro/commit/f07ef28))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.4.0
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.3.4...v0.4.0)
