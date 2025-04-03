@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.4.2
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.4.1...v0.4.2)
+
+### 🚀 Enhancements
+
+- Node x bun √ ([a9b8430](https://github.com/aatrooox/imgx-nitro/commit/a9b8430))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.4.1
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.4.0...v0.4.1)
