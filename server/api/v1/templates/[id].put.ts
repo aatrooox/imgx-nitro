@@ -1,6 +1,7 @@
 export default defineEventHandler(async (event) => {
+  const id = getRouterParam(event, 'id')
+
   const body = await useSafeValidatedBody(event, z.object({
-    id: z.string(),
     name: z.string(),
     template: z.string(),
     props: z.record(z.string(), z.any()),
@@ -8,16 +9,16 @@ export default defineEventHandler(async (event) => {
     propsSchema: templatePropsSchame
   }))
 
-  if (!body.success) {
+  if (!body.success || !id) {
     throw createError({
       statusCode: 400,
-      message: JSON.stringify(body.error)
+      message: body.error ? JSON.stringify(body.error) : 'id is required'
     })
   }
 
   const template = await prisma.template.update({
     where: {
-      id: body.data.id
+      id
     },
     data: {
       name: body.data.name,

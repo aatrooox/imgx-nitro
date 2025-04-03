@@ -1,8 +1,8 @@
 import { User } from "@prisma/client";
 
 export default defineEventHandler(async (event) => {
+  const id = getRouterParam(event, 'id')
   const body = await useSafeValidatedBody(event, z.object({
-    id: z.string(),
     name: z.string(),
     styleProps: z.record(z.string(), z.any()),
     userId: z.string(),
@@ -10,10 +10,10 @@ export default defineEventHandler(async (event) => {
     contentProps: z.record(z.string(), z.any()),
   }))
 
-  if (!body.success) {
+  if (!body.success || !id) {
     throw createError({
       statusCode: 400,
-      message: JSON.stringify(body.error)
+      message: body.error ? JSON.stringify(body.error) : 'id is required'
     })
   }
 
@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
   
   const preset = await prisma.preset.update({
     where: {
-      id: body.data.id
+      id
     },
     data: {
       name: body.data.name,

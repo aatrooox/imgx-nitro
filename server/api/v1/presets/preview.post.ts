@@ -1,4 +1,5 @@
 import satori from "satori"
+import loginPost from "../user/login.post"
 
 export default defineEventHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({

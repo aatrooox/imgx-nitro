@@ -1,21 +1,23 @@
 import { generateImage } from '~/utils/image'
 
 export default defineEventHandler(async (event) => {
-  const presetCode = getRouterParam(event, 'presetCode')
-  const format = getQuery(event).format as 'svg' | 'png' || 'png'
-  
-  const query = await useSafeValidatedQuery(event, z.object({}).catchall(z.string()))
+  const body = await useSafeValidatedBody(event, z.object({
+    code: z.string(),
+    contentProps: z.record(z.string(), z.any()),
+    styleProps: z.record(z.string(), z.any()),
+    format: z.enum(['svg', 'png']).optional().default('png'),
+  }));
 
-  if (!query.success) {
+  if (!body.success) {
     throw createError({
       statusCode: 400,
-      statusMessage: (query as any).message ?? '参数错误'
+      statusMessage: (body as any).message ?? '参数错误'
     })
   }
-  
+
   const preset = await prisma.preset.findUnique({
     where: {
-      code: presetCode
+      code: body.data.code
     },
     include: {
       templateInfo: {
@@ -30,10 +32,12 @@ export default defineEventHandler(async (event) => {
 
   const image = await generateImage({
     preset,
-    format
+    customContentProps: body.data.contentProps,
+    customStyleProps: body.data.styleProps,
+    format: body.data.format
   })
 
-  setHeader(event, 'Content-Type', format === 'svg' ? 'image/svg+xml' : 'image/png')
+  setHeader(event, 'Content-Type', body.data.format === 'svg' ? 'image/svg+xml' : 'image/png')
   setHeader(event, 'Cache-Control', 'public, max-age=3600, immutable')
   
   // 生成强验证器
