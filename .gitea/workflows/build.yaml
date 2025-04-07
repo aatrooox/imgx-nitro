@@ -15,15 +15,14 @@ jobs:
       - run: echo "  The name of your branch is ${{ gitea.ref }} and your repository is ${{ gitea.repository }}."
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Install bun
-        uses: oven-sh/setup-bun@v2
       - name: 下载依赖
         run: |
-          bun install
+          npm install -g pnpm
+          pnpm install
       - name: 构建项目
         env: 
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: bun run build
+        run: pnpm build
       - name: 复制到目标目录
         env: 
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -40,7 +39,7 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           cd /root/server/imgx-nitro
-          bunx prisma generate
+          npx prisma generate
           prisma migrate deploy
           pm2 stop pm2.config.yml
           pm2 start pm2.config.yml

@@ -42,9 +42,7 @@ export default defineEventHandler(async (event) => {
     return svg
   }
   
-  const { width, height, contentProps, styleProps } = preset;
-
-  const { contentKeys, propsSchema, template } = preset.templateInfo;
+  const { contentKeys, propsSchema } = preset.templateInfo;
 
   // 处理自定义内容props
   let customContentProps = {}

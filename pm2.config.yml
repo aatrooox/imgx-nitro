@@ -1,7 +1,14 @@
 apps:
   - name: imgx-nitro
     script: ./server/index.mjs
-    interpreter: bun
+    interpreter: node
     exec_mode: fork
     env:
       PORT: 5777
+  - name: imgx-ipx
+    interpreter: bun
+    script: bunx
+    args: "ipx serve --dir ./public"
+    exec_mode: fork
+    env:
+      PORT: 5778

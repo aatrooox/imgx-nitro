@@ -5,7 +5,13 @@ export default defineNitroConfig({
   runtimeConfig: {
     jwtSecret: 'your_secret_key',
   },
-  preset: 'bun',
+  experimental: {
+    tasks: true
+  },
+  scheduledTasks: {
+    "0 00 * * *": ['img:gen']
+  },
+  preset: 'node-server',
   imports: {
     presets: [
       {

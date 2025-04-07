@@ -1,5 +1,6 @@
 import { Resvg } from '@resvg/resvg-js'
 import { renderErrorSvg, vueTemplateToSatori, renderSVGBySatori } from './satori'
+import { log } from 'console'
 
 interface GenerateImageOptions {
   preset: any
