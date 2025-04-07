@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.5.0
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.4.3...v0.5.0)
+
+### 🚀 Enhancements
+
+- Ipx server; task img gen ([ca2529a](https://github.com/aatrooox/imgx-nitro/commit/ca2529a))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.4.3
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.4.2...v0.4.3)
