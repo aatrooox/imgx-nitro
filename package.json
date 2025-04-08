@@ -2,7 +2,7 @@
   "name": "imgx-server",
   "description": "generate useful img from server side",
   "private": true,
-  "version": "0.5.2",
+  "version": "0.5.3",
   "author": {
     "name": "aatrooox",
     "email": "gnakzz@qq.com",

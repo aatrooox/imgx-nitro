@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.5.3
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.5.2...v0.5.3)
+
+### 🏡 Chore
+
+- Pm2 ([d6900a1](https://github.com/aatrooox/imgx-nitro/commit/d6900a1))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.5.2
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.5.1...v0.5.2)
