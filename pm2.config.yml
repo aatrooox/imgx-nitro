@@ -7,8 +7,8 @@ apps:
       PORT: 5777
   - name: imgx-ipx
     interpreter: bun
-    script: bunx
-    args: ["ipx", "serve", "--dir", "./public"]
+    script: bun
+    args: ["x", "ipx", "serve", "--dir", "./public"]
     exec_mode: fork
     env:
       PORT: 5778
