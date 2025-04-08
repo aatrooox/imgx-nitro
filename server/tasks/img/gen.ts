@@ -22,8 +22,14 @@ export default defineTask({
           }
       });
       try {
-        const rootDir = process.cwd()
-        const presetsDir = resolve(rootDir, 'public/presets')
+        const isProd = process.env.NODE_ENV === 'production'
+        let presetsDir;
+        if (isProd) {
+          presetsDir = '/root/server/ipx/public/presets'
+        } else {
+          const rootDir = process.cwd()
+          presetsDir = resolve(rootDir, 'public/presets')
+        }
         console.log('更新预设图片 => ', presetsDir)
         // 确保目录存在
         await mkdir(presetsDir, { recursive: true });
