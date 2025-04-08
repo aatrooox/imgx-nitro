@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.5.5
+
+[compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.5.4...v0.5.5)
+
+### 🏡 Chore
+
+- Task ([2dd4832](https://github.com/aatrooox/imgx-nitro/commit/2dd4832))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.5.4
 
 [compare changes](https://github.com/aatrooox/imgx-nitro/compare/v0.5.3...v0.5.4)
