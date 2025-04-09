@@ -9,7 +9,7 @@ export default defineNitroConfig({
     tasks: true
   },
   scheduledTasks: {
-    "00 * * * *": ['img:gen']
+    "0 0,12 * * *": ['img:gen']
   },
   preset: 'node-server',
   imports: {
