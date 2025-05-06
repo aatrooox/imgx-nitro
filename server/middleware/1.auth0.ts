@@ -1,4 +1,3 @@
-import * as jose from 'jose'
 import getWhiteRoutes from '../utils/whiteRoutes'
 import { verifyAccessToken } from '~/utils/token';
 // 校验有无权限 jwt 
